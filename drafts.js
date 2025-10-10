@@ -63,15 +63,12 @@ Game.prototype.changeEnemyStatsAccordingToDifficulty = function () {
     }
 };
 
-Game.prototype.init = function () {
-    this.changeEnemyStatsAccordingToDifficulty();
+Game.prototype.generateMap = function () {
+    for (var r = 0; r < this.rows; r++) {
+        this._map[r] = [];
 
-    // Initialize map with wall on each cell by default
-    for (var i = 0; i < this.rows; i++) {
-        this._map[i] = [];
-
-        for (var j = 0; j < this.cols; j++) {
-       	    this._map[i][j] = { type: "wall" };
+        for (var c = 0; c < this.cols; c++) {
+       	    this._map[r][c] = { type: "wall" };
         }
     }
 }
@@ -107,9 +104,7 @@ Game.prototype.generateRooms = function () {
         if (isRoomValid) {
             for (let y = room.y.from; y <= room.y.to; y++) {
                 for (let x = room.x.from; x <= room.x.to; x++) {
-
                     this._map[y][x].type = "floor";
-
                 }
             }
             this.rooms.push(room);
@@ -119,8 +114,7 @@ Game.prototype.generateRooms = function () {
 
 var game = new Game();
 
-game.init();
+game.generateMap();
 game.generateRooms();
 
-console.log(game.rooms);
 console.log(game.printMap());
